@@ -1,3 +1,7 @@
+# These PhotoImage examples only work for GIF and true colour PNG images
+# Other PNG and JPEG images may not work
+# See http://effbot.org/tkinterbook/photoimage.htm
+
 from tkinter import *
 
 root = Tk()
