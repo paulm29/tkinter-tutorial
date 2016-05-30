@@ -1,12 +1,22 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 root = Tk()
 
 notebook = ttk.Notebook(root)
 
 def tabChangedEvent(event):
-    print(event.widget.tab(event.widget.index("current"), "text"))
+    tab = event.widget.tab(event.widget.index("current"), "text")
+    print(tab)
+    if tab == "Confirm":
+        confirmation = "Total is " + str(total)
+        tab3Label.config(text=confirmation)
+        confirm = messagebox.askyesno("Confirm purchase","Are you sure you wish to proceed with purchase?")
+        if confirm == True:
+            print("buy")
+        else:
+            print("don't buy")
 
 notebook.bind_all("<<NotebookTabChanged>>", tabChangedEvent)
 notebook.pack()
@@ -33,7 +43,9 @@ totalLabel.grid(row=4,column=0)
 totalEntry = Entry(tab1)
 totalEntry.grid(row=5,column=0)
 
+total = 0
 def print_total(event):
+    global total
     total = firstCheckbox.get() + secondCheckbox.get() + thirdCheckbox.get() + fourthCheckbox.get()
     totalEntry.delete(0,END)
     totalEntry.insert(0,total)
@@ -88,23 +100,24 @@ tab2Next.grid(row=9,column=0)
 # ====================================================================
 
 tab3 = Frame(root, width=600, height=500)
-notebook.add(tab3, text="TAB 3")
+notebook.add(tab3, text="Confirm")
 
-tab3Label = Label(tab3,text="a label")
+tab3Label = Label(tab3,text="Confirm purchase")
 tab3Label.grid(row=0,column=0)
 
-tab3Next = Button(tab3, text="next")
-tab3Next.grid(row=1,column=0)
+#tab3Next = Button(tab3, text="next")
+#tab3Next.grid(row=1,column=0)
 # ====================================================================
 # ====================================================================
 # ====================================================================
 
-
+'''
 tab4 = Frame(root, width=500, height=400,)
 notebook.add(tab4, text="TAB 4")
 
 tab4Label = Label(tab4,text="a label")
 tab4Label.grid(row=0,column=0)
+'''
 
 def gotoTab2(event):
     notebook.select(1)
@@ -114,12 +127,14 @@ def gotoTab3(event):
     notebook.select(2)
     root.update()
 
+'''
 def gotoTab4(event):
     notebook.select(3)
     root.update()
+'''
 
 tab1Next.bind("<Button-1>",gotoTab2)
 tab2Next.bind("<Button-1>",gotoTab3)
-tab3Next.bind("<Button-1>",gotoTab4)
+#tab3Next.bind("<Button-1>",gotoTab4)
 
 root.mainloop()
